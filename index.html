@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>해들녘 Sunlight Begins TAROT</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#0d1117;--card:#131a24;--card2:#1a2333;
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#7a6030;
+  --teal:#3a8c8c;--teal-light:#5ab8b8;
+  --cream:#f0e6cc;--soft:#b8a88a;--text:#d4c9b0;--muted:#9a9080;
+  --green:#4a9a6a;--red:#c44;--orange:#c87830;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--deep);color:var(--text);font-family:'Noto Serif KR',serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(58,90,140,.25) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(90,58,120,.15) 0%,transparent 60%);pointer-events:none;z-index:0;}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--dur,3s) ease-in-out infinite;opacity:0;}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:var(--op,.6)}}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 80px;position:relative;z-index:1;}
+
+/* ── HEADER ── */
+header{text-align:center;padding:48px 0 28px;}
+.bank-info{background:linear-gradient(135deg,#1a2a1a,#2a1a0a);border:1px solid var(--gold-dim);border-radius:8px;padding:10px 16px;display:inline-block;font-size:clamp(11px,3vw,13px);color:var(--gold-light);letter-spacing:.04em;margin-bottom:24px;font-family:'Cormorant Garamond',serif;max-width:100%;text-align:center;}
+.site-sub{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.25em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:6px;}
+.site-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,6vw,42px);font-weight:300;color:var(--cream);letter-spacing:.1em;}
+.site-title span{color:var(--gold);}
+.div-orn{display:flex;align-items:center;gap:12px;margin:16px auto;max-width:300px;}
+.div-orn::before{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold-dim));}
+.div-orn::after{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,var(--gold-dim));}
+
+/* ── NOTICE ── */
+.notice-box{background:rgba(58,90,80,.15);border:1px solid rgba(90,184,184,.2);border-radius:10px;padding:16px 20px;margin-bottom:20px;font-size:14px;line-height:1.9;color:var(--soft);}
+.ntitle{color:var(--teal-light);font-size:13px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;font-family:'Cormorant Garamond',serif;}
+
+/* ── STATUS CARDS ── */
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
+@media(max-width:500px){.status-grid{grid-template-columns:1fr;}}
+.status-card{background:linear-gradient(135deg,#151e2e,#111827);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:18px;position:relative;overflow:hidden;}
+.status-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold-dim),transparent);}
+.slabel{font-size:13px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;font-family:'Cormorant Garamond',serif;}
+.sbadge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;margin-bottom:8px;}
+.b-avail{background:rgba(74,154,106,.2);color:#6dcc96;border:1px solid rgba(74,154,106,.4);}
+.b-busy{background:rgba(200,100,50,.2);color:#f0a070;border:1px solid rgba(200,100,50,.4);}
+.b-closed{background:rgba(100,80,60,.2);color:var(--muted);border:1px solid rgba(100,80,60,.4);}
+.b-open{background:rgba(58,140,140,.2);color:var(--teal-light);border:1px solid rgba(58,140,140,.4);}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:pulse 2s ease-in-out infinite;display:inline-block;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.sdesc{font-size:14px;color:var(--soft);line-height:1.7;margin-bottom:4px;}
+.sdesc-detail{font-size:13px;color:var(--gold);margin-top:4px;font-style:italic;}
+
+/* ── BUTTONS ── */
+.btn-notify{width:100%;margin-top:8px;background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));border:1px solid var(--gold-dim);color:var(--gold-light);padding:9px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Noto Serif KR',serif;transition:all .2s;}
+.btn-notify:hover{background:rgba(201,168,76,.25);}
+.btn-primary{width:100%;padding:13px;background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(201,168,76,.08));border:1px solid var(--gold-dim);border-radius:8px;color:var(--gold-light);font-size:14px;cursor:pointer;font-family:'Noto Serif KR',serif;transition:all .25s;margin-top:14px;letter-spacing:.05em;}
+.btn-primary:hover{background:linear-gradient(135deg,rgba(201,168,76,.35),rgba(201,168,76,.15));border-color:var(--gold);transform:translateY(-1px);box-shadow:0 4px 20px rgba(201,168,76,.15);}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.btn-sm{padding:9px;font-size:12px;margin-top:8px;}
+.btn-kakao{width:100%;background:#FEE500;color:#3A1D1D;border:none;border-radius:8px;padding:12px;font-size:14px;cursor:pointer;font-family:'Noto Serif KR',serif;font-weight:700;transition:all .2s;margin-top:10px;letter-spacing:.02em;}
+.btn-kakao:hover{background:#fdd800;transform:translateY(-1px);}
+.btn-kakao-big{width:100%;background:#FEE500;color:#3A1D1D;border:none;border-radius:8px;padding:14px;font-size:15px;cursor:pointer;font-family:'Noto Serif KR',serif;font-weight:700;transition:all .2s;margin-top:8px;}
+.btn-kakao-big:hover{background:#fdd800;transform:translateY(-1px);}
+
+/* ── SECTION ACCORDION ── */
+.section{margin-bottom:16px;}
+.sec-hd{background:linear-gradient(135deg,#1a2840,#131e30);border:1px solid rgba(201,168,76,.25);border-radius:12px 12px 0 0;padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s;}
+.sec-hd:hover{background:linear-gradient(135deg,#1f3050,#1a2840);}
+.sec-hl{display:flex;align-items:center;gap:10px;min-width:0;flex:1;}
+.sec-icon{font-size:20px;}
+.sec-name{font-size:clamp(14px,4vw,16px);color:var(--cream);font-weight:500;}
+.sec-price{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);}
+.chev{display:flex;flex-direction:row;align-items:center;gap:5px;color:var(--gold-dim);transition:transform .3s;font-size:14px;flex-shrink:0;}
+.chev-hint{font-size:12px;letter-spacing:.04em;color:var(--muted);white-space:nowrap;}@media(max-width:360px){.chev-hint{display:none;}}
+.section.open .chev .chev-arrow{transform:rotate(180deg);}
+.chev-arrow{display:inline-block;transition:transform .3s;}
+.sec-bd{background:linear-gradient(135deg,#111825,#0f1620);border:1px solid rgba(201,168,76,.18);border-top:none;border-radius:0 0 12px 12px;overflow:hidden;max-height:0;transition:max-height .45s ease;}
+.section.open .sec-bd{max-height:3000px;}
+.sec-in{padding:20px;}
+
+/* ── PRICE TABLE ── */
+.prow{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;gap:12px;}
+.prow:last-child{border-bottom:none;}
+.prow .lbl{color:var(--soft);flex:1;}
+.prow .amt{color:var(--gold-light);font-family:'Cormorant Garamond',serif;font-size:15px;text-align:right;line-height:1.5;}
+.prow .nt{font-size:12px;color:#9a9080;display:block;}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0;}
+.tag{padding:4px 10px;border-radius:20px;font-size:11px;background:rgba(58,140,140,.15);color:var(--teal-light);border:1px solid rgba(58,140,140,.25);}
+.tag.g{background:rgba(201,168,76,.12);color:var(--gold);border-color:rgba(201,168,76,.25);}
+.ilist{list-style:none;margin:10px 0;}
+.ilist li{padding:6px 0;font-size:14px;color:var(--soft);display:flex;gap:8px;line-height:1.7;}
+.ilist li::before{content:'✦';color:var(--gold-dim);flex-shrink:0;margin-top:1px;}
+
+/* ── 메시지 선택지 계산기 ── */
+.msg-calc-box{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:18px;margin:16px 0;}
+.msg-calc-title{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-family:'Cormorant Garamond',serif;}
+.msg-type-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.msg-type-label{font-size:13px;color:var(--soft);}
+.counter-ctrl{display:flex;align-items:center;gap:10px;}
+.cnt-btn{width:30px;height:30px;border-radius:50%;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.25);color:var(--gold-light);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .2s;}
+.cnt-btn:hover{background:rgba(201,168,76,.25);}
+.cnt-btn:disabled{opacity:.3;cursor:not-allowed;}
+.cnt-val{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cream);min-width:28px;text-align:center;}
+.msg-calc-result{background:rgba(0,0,0,.2);border-radius:8px;padding:14px;margin-top:4px;}
+.msg-result-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:13px;}
+.msg-result-row .rl{color:var(--soft);}
+.msg-result-row .rv{color:var(--soft);}
+.msg-result-row .rv.hi{color:var(--teal-light);}
+.msg-result-divider{height:1px;background:rgba(255,255,255,.06);margin:8px 0;}
+.msg-result-total{display:flex;justify-content:space-between;align-items:center;padding-top:6px;}
+.msg-result-total .rl{font-size:13px;color:var(--soft);}
+.msg-result-total .rv-total{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-light);}
+.msg-result-total .rv-wknd{font-size:11px;color:var(--orange);margin-top:2px;display:block;text-align:right;}
+.msg-note-box{background:rgba(58,140,140,.08);border-left:2px solid rgba(58,140,140,.3);padding:10px 14px;margin-top:12px;border-radius:0 6px 6px 0;}
+.msg-note-box p{font-size:14px;color:var(--soft);line-height:1.7;}
+.msg-note-box .nb{color:var(--teal-light);}
+
+/* ── 심야/주말 요금표 ── */
+.sc-wrap{background:var(--card);border:1px solid rgba(201,168,76,.15);border-radius:12px;padding:20px;margin-bottom:16px;}
+.sc-title{text-align:center;font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--gold);margin-bottom:14px;letter-spacing:.08em;}
+.sc-table{width:100%;border-collapse:collapse;font-size:13px;}
+.sc-table th{color:#9a9080;font-weight:400;padding:8px 8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);}
+.sc-table th:first-child{text-align:left;}
+.sc-table td{padding:10px 8px;text-align:center;color:var(--soft);}
+.sc-table td:first-child{text-align:left;color:#9a9080;}
+.sc-table td.hl{color:var(--gold-light);}
+.sc-table tr:not(:last-child) td{border-bottom:1px solid rgba(255,255,255,.06);}
+.sc-note{font-size:12px;color:#9a9080;margin-top:12px;line-height:1.8;text-align:center;}
+
+/* ── 모달 ── */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px;}
+.mo.show{display:flex;}
+.mbox{background:var(--card2);border:1px solid rgba(201,168,76,.3);border-radius:16px;width:100%;max-width:460px;padding:28px 24px;position:relative;animation:mIn .3s ease;max-height:90vh;overflow-y:auto;}
+@keyframes mIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.mtitle{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cream);margin-bottom:4px;}
+.msub{font-size:13px;color:var(--soft);margin-bottom:20px;}
+.xbtn{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
+.xbtn:hover{color:var(--cream);}
+.fg{margin-bottom:14px;}
+.flbl{font-size:13px;color:var(--soft);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;display:block;}
+.fi,.fsel{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Noto Serif KR',serif;outline:none;transition:border .2s;}
+.fi:focus,.fsel:focus{border-color:var(--gold-dim);}
+.fsel{cursor:pointer;}
+option{background:#1a2333;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* 요금 계산 박스 */
+.pcalc{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:14px;margin:14px 0;}
+.pclbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.pcrow{display:flex;justify-content:space-between;padding:5px 0;font-size:14px;color:var(--soft);}
+.pcrow.add{color:var(--orange);}
+.pcrow.total{color:var(--gold-light);font-size:18px;font-family:'Cormorant Garamond',serif;border-top:1px solid rgba(201,168,76,.2);margin-top:8px;padding-top:10px;}
+
+/* 시간 슬롯 */
+.slot-section-label{font-size:13px;color:var(--soft);letter-spacing:.1em;margin:12px 0 6px;text-transform:uppercase;}
+.slot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+@media(max-width:380px){.slot-grid{grid-template-columns:repeat(3,1fr);}}
+.sbtn{padding:10px 6px;border-radius:7px;font-size:13px;border:1px solid rgba(201,168,76,.2);background:rgba(201,168,76,.06);color:var(--soft);cursor:pointer;transition:all .2s;text-align:center;font-family:'Noto Serif KR',serif;line-height:1.3;}
+.sbtn:hover:not(.blocked):not(.active){background:rgba(201,168,76,.18);border-color:var(--gold-dim);}
+.sbtn.active{background:rgba(201,168,76,.3);border-color:var(--gold);color:var(--gold-light);}
+.sbtn.blocked{background:rgba(100,60,60,.12);border-color:rgba(150,80,80,.18);color:rgba(150,100,100,.4);cursor:not-allowed;text-decoration:line-through;}
+.sbtn .sc{font-size:11px;color:var(--orange);display:block;margin-top:2px;}
+.sbtn.dawn{border-color:rgba(120,90,180,.3);background:rgba(100,80,150,.08);}
+.sbtn.dawn .sc{color:#aa88ee;}
+
+/* ── 관리자 ── */
+.adm-toggle{text-align:center;margin:40px 0 0;cursor:pointer;font-size:11px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;padding:8px;}
+.adm-toggle:hover{color:var(--soft);}
+.adm-panel{background:#0a1018;border:1px solid rgba(201,168,76,.12);border-radius:12px;margin-top:12px;overflow:hidden;max-height:0;transition:max-height .5s ease;}
+.adm-panel.show{max-height:2400px;}
+.adm-in{padding:24px;}
+.adm-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);margin-bottom:20px;}
+.adm-sec{margin-bottom:24px;}
+.adm-sec-t{font-size:13px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06);}
+.tog-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.tog-row:last-child{border-bottom:none;}
+.tog-lbl{font-size:13px;color:var(--soft);}
+.tog-desc{font-size:12px;color:var(--muted);margin-top:2px;}
+.tog-sw{position:relative;width:44px;height:24px;flex-shrink:0;}
+.tog-sw input{opacity:0;width:0;height:0;}
+.tog-sl{position:absolute;inset:0;background:rgba(100,80,60,.3);border-radius:12px;cursor:pointer;transition:.3s;border:1px solid rgba(201,168,76,.15);}
+.tog-sl:before{content:'';position:absolute;height:18px;width:18px;left:2px;bottom:2px;background:var(--muted);border-radius:50%;transition:.3s;}
+.tog-sw input:checked+.tog-sl{background:rgba(74,154,106,.3);border-color:rgba(74,154,106,.4);}
+.tog-sw input:checked+.tog-sl:before{transform:translateX(20px);background:#6dcc96;}
+.st-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.st-opt{padding:7px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid rgba(201,168,76,.2);background:rgba(201,168,76,.05);color:var(--muted);font-family:'Noto Serif KR',serif;transition:all .2s;}
+.st-opt:hover{background:rgba(201,168,76,.12);}
+.st-opt.aopt{background:rgba(201,168,76,.2);border-color:var(--gold-dim);color:var(--gold-light);}
+.adm-login{text-align:center;padding:28px 24px;}
+.adm-login input{width:100%;max-width:220px;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:10px 14px;color:var(--text);font-size:14px;text-align:center;outline:none;letter-spacing:.2em;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto;}
+.adm-login button{background:rgba(201,168,76,.15);border:1px solid var(--gold-dim);color:var(--gold-light);padding:9px 24px;border-radius:8px;cursor:pointer;font-family:'Noto Serif KR',serif;font-size:13px;}
+.days-btns{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.day-btn{padding:7px 16px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid rgba(201,168,76,.2);background:rgba(201,168,76,.05);color:var(--muted);font-family:'Noto Serif KR',serif;transition:all .2s;}
+.day-btn:hover{background:rgba(201,168,76,.12);}
+.day-btn.aopt{background:rgba(201,168,76,.2);border-color:var(--gold-dim);color:var(--gold-light);}
+.res-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:12px;margin-bottom:8px;}
+.res-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.res-nm{font-size:13px;color:var(--cream);}
+.res-tp{font-size:12px;color:var(--gold);font-family:'Cormorant Garamond',serif;}
+.res-det{font-size:13px;color:var(--muted);margin-bottom:8px;line-height:1.6;}
+.res-acts{display:flex;gap:6px;}
+.rbtn{padding:8px 14px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'Noto Serif KR',serif;transition:all .2s;}
+.rbtn.conf{background:rgba(74,154,106,.25);color:#6dcc96;border:1px solid rgba(74,154,106,.35);}
+.rbtn.canc{background:rgba(180,60,60,.2);color:#e08080;border:1px solid rgba(180,60,60,.3);}
+.bs-p{font-size:12px;padding:4px 10px;border-radius:10px;background:rgba(200,120,50,.2);color:#f0a070;border:1px solid rgba(200,120,50,.3);}
+.bs-c{font-size:12px;padding:4px 10px;border-radius:10px;background:rgba(74,154,106,.2);color:#6dcc96;border:1px solid rgba(74,154,106,.3);}
+
+.kakao-btn-main{width:100%;background:#FEE500;color:#3A1D1D;border:none;border-radius:8px;padding:14px;font-size:15px;cursor:pointer;font-family:'Noto Serif KR',serif;font-weight:700;transition:all .2s;margin-top:8px;}
+.kakao-btn-main:hover{background:#fdd800;transform:translateY(-1px);}
+
+footer{text-align:center;padding:32px 0 16px;font-size:13px;color:var(--muted);line-height:2.2;}
+.fd{color:var(--gold-dim);margin:0 6px;}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(30,40,55,.97);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:12px 24px;color:var(--cream);font-size:13px;z-index:300;opacity:0;transition:all .3s;white-space:nowrap;max-width:90vw;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="wrap">
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="bank-info">💳 카카오뱅크 3333-24357-3546 해ㄷㅇ</div>
+  <div class="site-sub">해들녘</div>
+  <div class="site-title">Sunlight Begins <span>TAROT</span></div>
+  <div class="div-orn"><span style="color:var(--gold)">✦</span></div>
+  <div style="font-size:12px;color:var(--muted);letter-spacing:.05em;">카카오톡 보이스 · 메시지 레터 리딩</div>
+</header>
+
+<!-- ── 안내 ── -->
+<div style="display:flex;align-items:center;gap:10px;margin:8px 0 12px;">
+  <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.08));"></div>
+  <div style="font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;font-family:'Cormorant Garamond',serif;">안내 사항</div>
+  <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(255,255,255,.08));"></div>
+</div>
+<div class="notice-box">
+  리딩은 참고용이며, 최종 판단은 본인에게 있습니다.<br>
+  ❤ 타로는 질문이 중요합니다. 운 형식 질문은 받지 않아요.<br>
+  ✅ 알고 싶은 걸 문장으로 풀어서 질문해 주세요. &nbsp;😱 질문 속에 질문을 숨기지 마세요.<br>
+  동일 질문은 24시간 후에 가능합니다.
+</div>
+
+<!-- ── STATUS ── -->
+<div style="display:flex;align-items:center;gap:10px;margin:28px 0 12px;">
+  <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.2));"></div>
+  <div style="font-size:12px;letter-spacing:.2em;color:var(--gold-dim);text-transform:uppercase;font-family:'Cormorant Garamond',serif;">현재 상태</div>
+  <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(201,168,76,.2));"></div>
+</div>
+<div class="status-grid">
+  <!-- 보이스 -->
+  <div class="status-card">
+    <div class="slabel">⚡ 보이스 상담</div>
+    <div id="vbadge" class="sbadge b-busy"><span class="dot"></span><span id="vbadge-t">상담 진행 중</span></div>
+    <div class="sdesc" id="vdesc">현재 다른 분과 상담 중이에요.</div>
+    <button class="btn-notify" id="notify-btn" onclick="openMo('notify')">🔔 알림 신청하기</button>
+  </div>
+  <!-- 메시지 -->
+  <div class="status-card">
+    <div class="slabel">💬 메시지 상담</div>
+    <div id="mbadge" class="sbadge b-open"><span class="dot"></span><span id="mbadge-t">접수 가능</span></div>
+    <div class="sdesc" id="mdesc">언제든 고민을 보내두실 수 있어요.<br>접수된 순서대로 답변 드립니다.</div>
+    <div class="sdesc-detail" id="mdesc-detail">답변 시간: 오전 10시 ~ 밤 10시</div>
+    <div class="sdesc-detail" id="mdesc-days" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     메시지 상담 섹션
+══════════════════════════════ -->
+<div style="display:flex;align-items:center;gap:10px;margin:32px 0 14px;">
+  <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(58,140,140,.3));"></div>
+  <div style="font-size:12px;letter-spacing:.2em;color:var(--teal-light);text-transform:uppercase;font-family:'Cormorant Garamond',serif;">메시지 상담</div>
+  <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(58,140,140,.3));"></div>
+</div>
+<!-- 메시지 상담 공통 안내 -->
+<div style="background:rgba(58,140,140,.06);border:1px solid rgba(58,140,140,.15);border-radius:10px;padding:14px 18px;margin-bottom:10px;">
+  <div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(58,184,184,.8);margin-bottom:10px;font-family:'Cormorant Garamond',serif;">✦ 메시지 상담 공통 안내</div>
+  <ul class="ilist" style="margin:0;">
+    <li>레터 형식으로 답변드립니다.</li>
+    <li>카드 이미지 제공합니다. 상황에 따라 이미지 배열을 설명합니다.</li>
+  </ul>
+</div>
+
+<div class="section" id="s-msg">
+  <div class="sec-hd" onclick="toggleSec('s-msg')">
+    <div class="sec-hl">
+      <span class="sec-icon">💬</span>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="sec-name">메시지 레터 리딩</div>
+        </div>
+        <div class="sec-price">질문 1건 — 8,000원~</div>
+      </div>
+    </div>
+    <span class="chev"><span class="chev-hint">견적 보기</span><span class="chev-arrow">▼</span></span>
+  </div>
+  <div class="sec-bd"><div class="sec-in">
+
+    <!-- ① 단일 질문 카드 -->
+    <div style="background:rgba(58,140,140,.07);border:1px solid rgba(58,140,140,.2);border-radius:12px;padding:18px;margin-bottom:12px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--teal-light);margin-bottom:12px;">① 단일 질문</div>
+      <div style="font-size:13px;color:var(--soft);line-height:1.9;margin-bottom:14px;">
+        하나의 핵심 질문에 대해 리딩합니다.<br>
+        <span style="color:var(--soft)">예)</span> "A와 이 관계가 앞으로 어떻게 될까요?"
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:12px;">
+        <div class="msg-result-row"><span class="rl">골라야 할 번호</span><span class="rv hi">6개 (1~78 중)</span></div>
+        <div class="msg-result-row" style="margin-top:2px;"><span style="font-size:13px;color:var(--soft);">질문과 함께 고른 숫자를 적어주세요</span></div>
+        <div class="msg-result-row" style="margin-top:2px;"><span style="font-size:12px;color:var(--soft);">예) 3, 17, 42, 55, 61, 72 — 중복 없이 무작위로</span></div>
+        <div class="msg-result-divider"></div>
+        <div class="msg-result-total"><span class="rl">평일</span><span class="rv-total">8,000원</span></div>
+        <div class="msg-result-total" style="margin-top:4px;"><span class="rl">주말·휴일</span><span class="rv-total" style="color:var(--orange)">16,000원</span></div>
+      </div>
+      <div class="msg-note-box" style="margin-top:12px;">
+        <p style="color:rgba(184,168,138,.5);">상황 설명은 5줄 이내로 (선택 사항)</p>
+      </div>
+
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
+        <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:12px 14px;">
+          <div style="font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:4px;">요금 책정은 물음표(?) 기준</div>
+          <div style="font-size:13px;color:var(--soft);line-height:1.7;">물음표(?) 1개 = 질문 1건으로 처리됩니다. 2개 이상이면 건수대로 요금이 적용됩니다.<br><span style="color:rgba(184,168,138,.5);">단일 금액 접수 시 마지막 질문만 리딩됩니다.</span></div>
+        </div>
+        <div style="background:rgba(58,140,140,.06);border:1px solid rgba(58,140,140,.15);border-radius:8px;padding:12px 14px;">
+          <div style="font-size:13px;color:var(--teal-light);letter-spacing:.08em;margin-bottom:6px;">💡 가정 질문도 가능해요</div>
+          <div style="font-size:13px;color:var(--soft);line-height:1.7;">"제가 먼저 연락을 끊는다면 상대가 어떻게 반응할까요?"처럼<br>특정 행동이나 선택을 가정한 질문도 리딩 가능합니다.</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:12px 14px;">
+          <div style="font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:4px;">질문은 구체적으로</div>
+          <div style="font-size:13px;color:var(--soft);margin-bottom:8px;">시간, 상대, 상황이 명확하게 있는 것을 말합니다.</div>
+          <div style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:12px;">"상대가 저를 어떻게 생각하는지"처럼 범위가 넓으면 리딩의 싱크가 빗나갈 수 있습니다.<br><span style="color:var(--teal-light);">어느 부분에 대한 생각이 궁금한지 좁혀서 질문해 주세요.</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+
+            <div style="font-size:13px;">
+              <div style="color:rgba(200,80,80,.8);margin-bottom:2px;">❌ "상대가 저를 어떻게 생각하는지 궁금해요"</div>
+              <div style="color:#6dcc96;">✅ "상대가 저와의 관계를 발전시키고 싶은 마음이 있는지 궁금해요"</div>
+            </div>
+
+            <div style="height:1px;background:rgba(255,255,255,.05);"></div>
+
+            <div style="font-size:13px;">
+              <div style="color:rgba(200,80,80,.8);margin-bottom:2px;">❌ "제 건강이 괜찮을지 궁금해요"</div>
+              <div style="color:#6dcc96;">✅ "지금 받는 치료가 효과가 있을까요?"</div>
+            </div>
+
+            <div style="height:1px;background:rgba(255,255,255,.05);"></div>
+
+            <div style="font-size:13px;">
+              <div style="color:rgba(200,80,80,.8);margin-bottom:2px;">❌ "직장에서 잘 될 수 있을지 궁금해요"</div>
+              <div style="color:#6dcc96;">✅ "이번 프로젝트에서 제 역할이 좋은 평가를 받을 수 있을지 궁금해요"</div>
+            </div>
+
+            <div style="height:1px;background:rgba(255,255,255,.05);"></div>
+
+            <div style="font-size:13px;">
+              <div style="color:rgba(200,80,80,.8);margin-bottom:2px;">❌ "금전 상황이 어떨지 알고 싶어요"</div>
+              <div style="color:#6dcc96;">✅ "빌려준 돈이 있는데 이번 달 안에 상대가 갚을까요?"</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ② 비교 질문 카드 -->
+    <div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:18px;margin-bottom:16px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold-light);margin-bottom:4px;">② 비교 질문</div>
+      <div style="font-size:13px;color:var(--soft);margin-bottom:14px;line-height:1.9;">
+        여러 선택지 각각의 과정과 결과를 비교해서 리딩합니다.<br>
+        <span style="color:var(--soft)">예)</span> "선택지 1, 2, 3, 4번이 있습니다. 각 선택지들은 어떤 과정과 결과가 있나요?"<br>
+        <span style="color:var(--soft);font-size:12px;">선택지가 2개든 4개든 개수만큼 선택지 수를 맞춰주세요.</span>
+      </div>
+
+      <!-- 선택지 카운터 -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:13px;color:var(--soft);">선택지 수</div>
+          <div style="font-size:12px;color:var(--soft);margin-top:2px;">최소 2개부터</div>
+        </div>
+        <div class="counter-ctrl">
+          <button class="cnt-btn" id="cnt-minus" onclick="changeChoice(-1)" disabled>−</button>
+          <span class="cnt-val" id="cnt-val">2</span>
+          <button class="cnt-btn" id="cnt-plus" onclick="changeChoice(1)">+</button>
+        </div>
+      </div>
+
+      <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:12px;">
+        <div class="msg-result-row"><span class="rl">골라야 할 번호</span><span class="rv hi" id="mr-nums">5개 (1~78 중)</span></div>
+        <div class="msg-result-row" style="margin-top:2px;"><span style="font-size:12px;color:var(--soft);" id="mr-nums-detail">현재상태 1개 + 선택지 2개 × 2개씩 · 번호 중복 불가</span></div>
+        <div class="msg-result-row" style="margin-top:2px;"><span style="font-size:13px;color:var(--soft);">질문과 함께 고른 숫자를 적어주세요</span></div>
+        <div class="msg-result-row" style="margin-top:2px;"><span style="font-size:12px;color:var(--soft);">예) 7, 23, 38, 51, 66 — 중복 없이 무작위로</span></div>
+        <div class="msg-result-divider"></div>
+        <div class="msg-result-total">
+          <span class="rl">평일</span>
+          <div style="text-align:right;">
+            <span class="rv-total" id="mr-price-wd">16,000원</span>
+            <span style="font-size:12px;color:var(--muted);display:block;" id="mr-price-wd-detail">선택지 2개 × 8,000원</span>
+          </div>
+        </div>
+        <div class="msg-result-total" style="margin-top:6px;">
+          <span class="rl">주말·휴일</span>
+          <div style="text-align:right;">
+            <span class="rv-total" style="color:var(--orange);" id="mr-price-wk">32,000원</span>
+            <span style="font-size:12px;color:var(--muted);display:block;" id="mr-price-wk-detail">선택지 2개 × 16,000원</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn-kakao-big" onclick="goKakao()">💬 카카오톡으로 질문 보내기</button>
+  </div></div>
+</div>
+
+<!-- ══════════════════════════════
+     전화 상담 섹션들
+══════════════════════════════ -->
+<div style="display:flex;align-items:center;gap:10px;margin:32px 0 14px;">
+  <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.3));"></div>
+  <div style="font-size:12px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;font-family:'Cormorant Garamond',serif;">전화 상담</div>
+  <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(201,168,76,.3));"></div>
+</div>
+<!-- 전화 상담 예약 안내 -->
+<div style="background:rgba(58,90,140,.12);border:1px solid rgba(100,140,200,.2);border-radius:10px;padding:14px 18px;margin-bottom:10px;font-size:13px;line-height:2;color:var(--soft);">
+  <div style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:rgba(140,180,220,.9);margin-bottom:8px;font-family:'Cormorant Garamond',serif;">✦ 예약 안내</div>
+  📅 예약은 <strong style="color:var(--cream)">내일부터</strong> 가능합니다.<br>
+  ⚡ 당일 즉시 상담은 위 <strong style="color:var(--cream)">상태 표시</strong>가 <span style="color:#6dcc96;">바로 상담 가능</span>일 때 카카오톡으로 바로 문의해 주세요.
+</div>
+
+<!-- 전화 상담 공통 안내 -->
+<div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:14px 18px;margin-bottom:10px;">
+  <div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-family:'Cormorant Garamond',serif;">✦ 전화 상담 공통 안내</div>
+  <ul class="ilist" style="margin:0;">
+    <li>📞 카카오톡 보이스톡으로 진행됩니다.</li>
+    <li>🃏 숫자 10개를 선택해 주세요. (1~78 중) · 카드 선택은 질문자가 합니다.</li>
+    <li>연장 시 상위 시간 리딩으로 전환되며 차액 결제가 진행됩니다.</li>
+  </ul>
+</div>
+
+<div class="section" id="s-15">
+  <div class="sec-hd" onclick="toggleSec('s-15')">
+    <div class="sec-hl"><span class="sec-icon">⚡</span>
+      <div><div class="sec-name">전화 상담 — 15분</div><div class="sec-price">15,000원~</div></div>
+    </div><span class="chev"><span class="chev-hint">예약하러 가기</span><span class="chev-arrow">▼</span></span>
+  </div>
+  <div class="sec-bd"><div class="sec-in">
+    <ul class="ilist">
+      <li>결론에 대한 리딩까지 다룹니다.</li>
+      <li>비교 질문 가능 (선택지에 대한 과정과 결과)</li>
+    </ul>
+    <button class="btn-primary" id="book-btn-15" onclick="openMo('voice','15분 전화 상담',15000,15,'15')">📅 예약 신청하기</button>
+  </div></div>
+</div>
+
+<div class="section" id="s-30">
+  <div class="sec-hd" onclick="toggleSec('s-30')">
+    <div class="sec-hl"><span class="sec-icon">💎</span>
+      <div><div class="sec-name">전화 상담 — 30분</div><div class="sec-price">25,000원~</div></div>
+    </div><span class="chev"><span class="chev-hint">예약하러 가기</span><span class="chev-arrow">▼</span></span>
+  </div>
+  <div class="sec-bd"><div class="sec-in">
+    <ul class="ilist">
+      <li>질문 2~3개 가능 (흐름에 따라 조정)</li>
+      <li>배경·관계 구조 설명하고 싶은 분께 추천</li>
+      <li>깊은 상담은 30분 이상 권장</li>
+    </ul>
+    <button class="btn-primary" id="book-btn-30" onclick="openMo('voice','30분 전화 상담',25000,30,'30')">📅 예약 신청하기</button>
+  </div></div>
+</div>
+
+<div class="section" id="s-60">
+  <div class="sec-hd" onclick="toggleSec('s-60')">
+    <div class="sec-hl"><span class="sec-icon">👑</span>
+      <div><div class="sec-name">전화 상담 — 60분</div><div class="sec-price">40,000원~</div></div>
+    </div><span class="chev"><span class="chev-hint">예약하러 가기</span><span class="chev-arrow">▼</span></span>
+  </div>
+  <div class="sec-bd"><div class="sec-in">
+    <ul class="ilist">
+      <li>복합 질문 및 파생 질문 가능</li>
+      <li>관계·감정·상황 흐름 깊이 분석</li>
+      <li>상황이 복잡해 한두 문장으로 정리하기 어려운 분</li>
+      <li>이야기를 충분히 듣고, 카드의 배열과 흐름으로만 답합니다.</li>
+    </ul>
+    <button class="btn-primary" id="book-btn-60" onclick="openMo('voice','60분 전화 상담',40000,60,'60')">📅 예약 신청하기</button>
+  </div></div>
+</div>
+
+
+<button class="kakao-btn-main" onclick="goKakao()">💬 카카오 오픈톡으로 문의하기</button>
+
+<footer>
+  <div><span class="fd">✦</span>해들녘 Sunlight Begins TAROT<span class="fd">✦</span></div>
+  <div>카카오뱅크 선결제 후 입금 스크린샷을 카카오톡으로 보내주세요</div>
+  <div style="margin-top:8px;font-size:12px;color:#888;">"진짜 알고 싶은 핵심을 질문으로 주세요."</div>
+</footer>
+
+<!-- ══════════════════════════════
+     관리자 패널
+══════════════════════════════ -->
+<div class="adm-toggle" onclick="toggleAdm()">⚙ 관리자</div>
+<div class="adm-panel" id="adm-panel">
+  <div id="adm-login" class="adm-login">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold);margin-bottom:16px;">관리자 인증</div>
+    <input type="password" id="adm-pw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')checkPw()">
+    <button onclick="checkPw()">확인</button>
+  </div>
+  <div id="adm-body" style="display:none;" class="adm-in">
+    <div class="adm-title">⚙ 관리자 패널</div>
+
+    <!-- 보이스 상태 -->
+    <div class="adm-sec">
+      <div class="adm-sec-t">⚡ 보이스 상담 상태</div>
+      <div class="st-btns" id="vst-btns">
+        <button class="st-opt" onclick="setVSt('available',this)">🟢 바로 상담 가능</button>
+        <button class="st-opt aopt" onclick="setVSt('busy',this)">🟠 상담 진행 중</button>
+        <button class="st-opt" onclick="setVSt('closed',this)">⛔ 오늘 마감</button>
+      </div>
+    </div>
+
+    <!-- 메시지 상태 -->
+    <div class="adm-sec">
+      <div class="adm-sec-t">💬 메시지 상담 상태</div>
+      <div class="st-btns" id="mst-btns">
+        <button class="st-opt aopt" onclick="setMSt('open',this)">🟢 접수 가능</button>
+        <button class="st-opt" onclick="setMSt('progress',this)">🔄 순차 답변 중</button>
+        <button class="st-opt" onclick="setMSt('pause',this)">⏸ 답변 불가</button>
+        <button class="st-opt" onclick="setMSt('off',this)">🚫 휴무</button>
+      </div>
+
+      <!-- 답변 가능 날짜 -->
+      <div id="days-section" style="display:none;margin-top:14px;">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">답변 가능 시작일</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <input type="date" id="avail-date" class="fi" style="max-width:180px;" onchange="setDays(this.value)">
+          <button class="day-btn" onclick="clearAvailDate()" style="padding:6px 12px;font-size:11px;">지우기</button>
+        </div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px;">선택 시 "○월 ○일부터 답변 가능"으로 표시됩니다</div>
+      </div>
+    </div>
+
+    <!-- 기능 토글 -->
+    <div class="adm-sec">
+      <div class="adm-sec-t">기능 제어</div>
+      <div class="tog-row">
+        <div><div class="tog-lbl">🔔 알림 신청 버튼</div><div class="tog-desc">진행 중 상태일 때만 노출</div></div>
+        <label class="tog-sw"><input type="checkbox" id="tog-notify" checked onchange="applyNotify()"><span class="tog-sl"></span></label>
+      </div>
+      <div class="tog-row">
+        <div><div class="tog-lbl">📅 전화 예약 접수</div><div class="tog-desc">OFF 시 예약 버튼 비활성화</div></div>
+        <label class="tog-sw"><input type="checkbox" id="tog-book" checked onchange="applyBook()"><span class="tog-sl"></span></label>
+      </div>
+    </div>
+
+    <!-- 예약 목록 -->
+    <div class="adm-sec">
+      <div class="adm-sec-t">예약 현황</div>
+      <div id="adm-list"></div>
+    </div>
+
+    <button class="btn-primary" style="background:rgba(150,60,60,.15);border-color:rgba(180,80,80,.3);color:#e08080;" onclick="admLogout()">로그아웃</button>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- ══════════════════════════════
+     전화 예약 모달
+══════════════════════════════ -->
+<div class="mo" id="mo-voice">
+<div class="mbox">
+  <button class="xbtn" onclick="closeMo('mo-voice')">✕</button>
+  <div class="mtitle" id="mo-v-title">전화 상담 예약</div>
+  <div class="msub">비회원 예약 · 입금 확인 후 관리자 확정</div>
+  <div class="fg">
+    <label class="flbl">이름 / 닉네임</label>
+    <input class="fi" id="v-name" placeholder="예: 김복순, 별빛이 등 자유롭게">
+    <div style="font-size:12px;color:var(--soft);margin-top:5px;line-height:1.6;">임의 기재 가능 · 저장 목적 아님<br>카카오톡 문의 시 <span style="color:var(--teal-light)">"페이지에서 ○○으로 예약했어요"</span>라고 말씀해 주세요.</div>
+  </div>
+  <div class="fg">
+    <label class="flbl">희망 날짜</label>
+    <input class="fi" type="date" id="v-date" onchange="renderSlots()">
+  </div>
+  <div class="fg">
+    <label class="flbl">희망 시간 <span style="font-size:11px;color:var(--soft);font-style:italic;text-transform:none;">— 찬 시간은 자동 비활성화</span></label>
+    <div class="slot-section-label">☀ 낮 · 저녁</div>
+    <div class="slot-grid" id="slot-day"></div>
+    <div class="slot-section-label" style="margin-top:14px;">🌙 심야 · 새벽 <span style="color:var(--orange);font-size:13px;">(추가 요금 적용)</span></div>
+    <div class="slot-grid" id="slot-night"></div>
+  </div>
+
+  <div class="pcalc">
+    <div class="pclbl">✦ 요금 계산</div>
+    <div class="pcrow"><span>상담 종류</span><span id="pc-type">—</span></div>
+    <div class="pcrow"><span>기본 요금</span><span id="pc-base">—</span></div>
+    <div class="pcrow add" id="pc-add-row" style="display:none"><span id="pc-add-lbl">추가요금</span><span id="pc-add">—</span></div>
+    <div class="pcrow total"><span>최종 금액</span><span id="pc-total">—</span></div>
+  </div>
+  <div style="font-size:13px;color:var(--soft);margin-bottom:14px;line-height:1.8;"><span style="color:#e05555;">⚠</span> 신청 후 1시간 내 미입금 시 예약 신청이 취소 처리됩니다.<br>입금 후 카카오톡으로 스크린샷을 보내주세요.</div>
+  <button class="btn-primary" onclick="submitVoice()">✦ 예약 신청하기</button>
+</div>
+</div>
+
+<!-- 알림 모달 -->
+<div class="mo" id="mo-notify">
+<div class="mbox">
+  <button class="xbtn" onclick="closeMo('mo-notify')">✕</button>
+  <div class="mtitle">🔔 알림 신청</div>
+  <div class="msub">상담 가능 상태로 바뀌면 문자로 알려드려요</div>
+  <div class="fg">
+    <label class="flbl">전화번호</label>
+    <input class="fi" placeholder="010-0000-0000" type="tel">
+    <div style="font-size:12px;color:var(--soft);margin-top:6px;line-height:1.6;">상태 변경 시 신청자 전원에게 자동 문자 발송됩니다.</div>
+  </div>
+  <div class="fg"><label class="flbl">닉네임 (선택)</label><input class="fi" placeholder="닉네임"></div>
+  <button class="btn-primary" onclick="submitNotify()">✦ 알림 신청 완료</button>
+</div>
+</div>
+
+<div class="toast" id="toast-el"></div>
+
+<script>
+/* ── 별 ── */
+const se=document.getElementById('stars');
+for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const z=Math.random()*2+.5;s.style.cssText=`width:${z}px;height:${z}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${2+Math.random()*4}s;--op:${.3+Math.random()*.5};animation-delay:${Math.random()*5}s;`;se.appendChild(s);}
+
+/* ── 예약 데이터 ── */
+let bookings=[];
+let nid=4, selSlot=null, curLabel='', curBase=0, curBlock=30, curKey='15';
+let choiceCount=2;
+/* ── 상태 ── */
+let vSt='busy', mSt='open', notifyOn=true, bookOn=true, admOpen=false, admAuth=false, msgDays='';
+
+/* ── 메시지 계산기 ── */
+function changeChoice(d){
+  choiceCount = Math.max(2, choiceCount+d);
+  document.getElementById('cnt-val').textContent = choiceCount;
+  document.getElementById('cnt-minus').disabled = choiceCount<=2;
+
+  // 비교 질문: 현재상태 1개 + 선택지n × 2개
+  const nums = 1 + choiceCount * 2;
+  const prWd = 8000 * choiceCount;
+  const prWk = 16000 * choiceCount;
+
+  document.getElementById('mr-nums').textContent = `${nums}개 (1~78 중)`;
+  document.getElementById('mr-nums-detail').textContent = `현재상태 1개 + 선택지 ${choiceCount}개 × 2개씩 · 번호 중복 불가`;
+  document.getElementById('mr-price-wd').textContent = prWd.toLocaleString()+'원';
+  document.getElementById('mr-price-wk').textContent = prWk.toLocaleString()+'원';
+  document.getElementById('mr-price-wd-detail').textContent = `선택지 ${choiceCount}개 × 8,000원`;
+  document.getElementById('mr-price-wk-detail').textContent = `선택지 ${choiceCount}개 × 16,000원`;
+}
+
+/* ── 카카오 연결 ── */
+function goKakao(){
+  // 실제 오픈톡 URL로 교체
+  showToast('카카오 오픈톡으로 연결됩니다 💛');
+  // window.open('https://open.kakao.com/o/XXXXXXXX','_blank');
+}
+
+/* ── 섹션 토글 ── */
+function toggleSec(id){document.getElementById(id).classList.toggle('open');}
+
+/* ── 심야/주말 요금 ── */
+const SC={15:[3000,6000,15000],30:[4500,9000,25000],60:[8000,16000,35000]};
+function isWknd(ds){if(!ds)return false;const d=new Date(ds);return d.getDay()===0||d.getDay()===6;}
+
+/* 시작 시간(h, 소수) + 상담 길이(key분) 기준으로 비례 추가요금 계산
+   경계: 22:00 = 밤, 01:00 = 새벽
+   0~5시는 내부적으로 24~29로 처리해 자정 넘어가는 계산 통일
+*/
+/* getSC: 자정 경계를 넘어가는 경우 다음날 요일까지 반영해 합산
+   ds = 시작 날짜, h = 시작 시간(소수, 22~23.5 범위)
+   nextDs = 다음날 날짜 (자정 넘어가는 구간의 요일 판단용, 없으면 자동 계산)
+*/
+function getSC(key, ds, h, nextDs){
+  const k = parseInt(key); const sc = SC[k];
+  const dur = k; // 분
+
+  // 0~5시 슬롯은 이미 nextDay 날짜로 들어오므로 주말 판단 그대로
+  if(h >= 0 && h < 6){
+    if(isWknd(ds)) return {a: sc[2], l: '주말·휴일 추가'};
+    // 평일 새벽: 비례 계산
+    const hN = h + 24;
+    const endN = hN + dur/60;
+    const DAWN = 25;
+    const dawnOver = endN > DAWN ? Math.min(endN - DAWN, dur/60) * 60 : 0;
+    const nightS = Math.max(hN, 22); const nightE = Math.min(endN, DAWN);
+    const nightOver = nightE > nightS ? (nightE - nightS) * 60 : 0;
+    if(dawnOver > 0){
+      const ratio = dawnOver/dur;
+      return {a: Math.round(sc[1]*ratio), l: ratio>=1?'새벽 1시 이후 추가':`새벽 ${Math.round(dawnOver)}분 추가`};
+    }
+    if(nightOver > 0){
+      const ratio = nightOver/dur;
+      return {a: Math.round(sc[0]*ratio), l: ratio>=1?'밤 10시 이후 추가':`심야 ${Math.round(nightOver)}분 추가`};
+    }
+    return null;
+  }
+
+  // 22:00~23:30 슬롯: 자정 넘어갈 수 있음
+  const endH = h + dur/60; // 예: 23.5 + 1 = 24.5
+
+  // 다음날 날짜 계산
+  if(!nextDs){
+    const nd = parseDate(ds); nd.setDate(nd.getDate()+1);
+    nextDs = nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');
+  }
+
+  const todayWknd = isWknd(ds);
+  const nextWknd  = isWknd(nextDs);
+
+  // 자정을 넘어가지 않는 경우
+  if(endH <= 24){
+    if(todayWknd) return {a: sc[2], l: '주말·휴일 추가'};
+    // 평일: 심야/새벽 비례
+    const NIGHT=22; const DAWN=25;
+    const nightS = Math.max(h, NIGHT); const nightE = Math.min(endH, DAWN);
+    const nightOver = nightE > nightS ? (nightE-nightS)*60 : 0;
+    if(nightOver > 0){
+      const ratio = nightOver/dur;
+      return {a: Math.round(sc[0]*ratio), l: ratio>=1?'밤 10시 이후 추가':`심야 ${Math.round(nightOver)}분 추가`};
+    }
+    return null;
+  }
+
+  // 자정을 넘어가는 경우: 오늘 구간 + 내일 구간 분리
+  const minsToday    = (24 - h) * 60;          // 자정까지 분
+  const minsTomorrow = dur - minsToday;          // 자정 이후 분
+
+  let totalAdd = 0; const lblParts = [];
+
+  // ── 오늘(자정 이전) 구간 ──
+  if(todayWknd){
+    const add = Math.round(sc[2] * minsToday/dur);
+    totalAdd += add; lblParts.push(`주말 ${Math.round(minsToday)}분`);
+  } else {
+    // 평일 심야: h~24:00 중 22:00 이후 구간
+    const nightOver = Math.max(0, (24 - Math.max(h, 22))) * 60;
+    if(nightOver > 0){
+      const add = Math.round(sc[0] * nightOver/dur);
+      totalAdd += add; lblParts.push(`심야 ${Math.round(nightOver)}분`);
+    }
+  }
+
+  // ── 내일(자정 이후) 구간 ──
+  if(nextWknd){
+    const add = Math.round(sc[2] * minsTomorrow/dur);
+    totalAdd += add; lblParts.push(`주말 ${Math.round(minsTomorrow)}분`);
+  } else {
+    // 평일: 00:00~01:00 심야, 01:00 이후 새벽
+    const dawnStart = 60; // 자정 이후 60분 = 01:00
+    const nightPart = Math.min(minsTomorrow, dawnStart);
+    const dawnPart  = Math.max(0, minsTomorrow - dawnStart);
+    if(nightPart > 0){
+      const add = Math.round(sc[0] * nightPart/dur);
+      totalAdd += add; lblParts.push(`심야 ${Math.round(nightPart)}분`);
+    }
+    if(dawnPart > 0){
+      const add = Math.round(sc[1] * dawnPart/dur);
+      totalAdd += add; lblParts.push(`새벽 ${Math.round(dawnPart)}분`);
+    }
+  }
+
+  if(totalAdd === 0) return null;
+  // 레이블: 주말만 있으면 단순화
+  const lbl = lblParts.every(p=>p.startsWith('주말')) ? '주말·휴일 추가' : lblParts.join(' + ') + ' 추가';
+  return {a: totalAdd, l: lbl};
+}
+
+/* ── 모달 ── */
+function openMo(type,label='',base=0,block=30,key='15'){
+  if(type==='voice'){
+    curLabel=label;curBase=base;curBlock=block;curKey=key;selSlot=null;
+    document.getElementById('mo-v-title').textContent=label+' 예약';
+    document.getElementById('pc-type').textContent=label;
+    document.getElementById('pc-base').textContent=base.toLocaleString()+'원';
+    document.getElementById('pc-total').textContent=base.toLocaleString()+'원~';
+    document.getElementById('pc-add-row').style.display='none';
+    const d=new Date();d.setDate(d.getDate()+1);
+    const ds=d.toISOString().split('T')[0];
+    const vd=document.getElementById('v-date');
+    vd.value=ds;vd.min=ds;
+    renderSlots();
+    document.getElementById('mo-voice').classList.add('show');
+  } else {
+    document.getElementById('mo-notify').classList.add('show');
+  }
+}
+function closeMo(id){document.getElementById(id).classList.remove('show');}
+document.querySelectorAll('.mo').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('show');}));
+
+/* ── 슬롯 렌더링 ── */
+function parseDate(ds){
+  // 시간대 문제 없이 날짜 파싱
+  const [y,mo,d]=ds.split('-').map(Number);
+  return new Date(y,mo-1,d);
+}
+function getBlocked(ds){
+  const result=[];
+  bookings.forEach(b=>{
+    const bEnd=b.startHour+b.blockMin/60;
+    if(b.date===ds){
+      result.push({s:b.startHour, e:bEnd});
+    }
+    // 전날 예약이 자정을 넘어 오늘까지 걸치는 경우
+    const prev=parseDate(ds); prev.setDate(prev.getDate()-1);
+    const prevDs=prev.getFullYear()+'-'+String(prev.getMonth()+1).padStart(2,'0')+'-'+String(prev.getDate()).padStart(2,'0');
+    if(b.date===prevDs && bEnd>24){
+      result.push({s:0, e:bEnd-24});
+    }
+  });
+  return result;
+}
+function isBlocked(hf, ds, blk){
+  const ranges=getBlocked(ds);
+  const reqEnd=hf+blk/60;
+  const overlaps=(r)=> reqEnd>r.s && hf<r.e;
+  if(ranges.some(overlaps)) return true;
+  // 새 예약이 자정을 넘기는 경우 (strictly > 24)
+  if(reqEnd>24){
+    const nextDay=parseDate(ds); nextDay.setDate(nextDay.getDate()+1);
+    const nextDs=nextDay.getFullYear()+'-'+String(nextDay.getMonth()+1).padStart(2,'0')+'-'+String(nextDay.getDate()).padStart(2,'0');
+    const nextRanges=getBlocked(nextDs).filter(r=>r.s<reqEnd-24);
+    if(nextRanges.some(r=>overlaps({s:r.s+24,e:r.e+24}))) return true;
+  }
+  return false;
+}
+
+function makeSlotBtn(h, m, ds){
+  // 새벽 0~3시는 다음날 날짜로 처리
+  let slotDs = ds;
+  if(h>=0 && h<6){
+    const nd=parseDate(ds); nd.setDate(nd.getDate()+1);
+    slotDs=nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');
+  }
+  // 자정 경계 계산용 다음날 날짜
+  const ndNext=parseDate(slotDs); ndNext.setDate(ndNext.getDate()+1);
+  const nextDs=ndNext.getFullYear()+'-'+String(ndNext.getMonth()+1).padStart(2,'0')+'-'+String(ndNext.getDate()).padStart(2,'0');
+  const blk=isBlocked(h+(m/60), slotDs, curBlock);
+  const sc=getSC(curKey, slotDs, h+(m/60), nextDs);
+  const isDawn=(h>=0&&h<6);
+  const btn=document.createElement('button');
+  btn.className='sbtn'+(blk?' blocked':'')+(isDawn&&!blk?' dawn':'');
+  btn.disabled=blk;
+  const hh=h<10?`0${h}`:h;
+  const mm=m===0?'00':'30';
+  const label=`${hh}:${mm}`;
+  btn.innerHTML=label+(sc&&!blk?`<span class="sc">+${sc.a>=1000?(sc.a/1000).toFixed(sc.a%1000?1:0)+'k':sc.a}</span>`:'');
+  if(!blk)btn.onclick=()=>pickSlot(h+(m/60), btn, slotDs, label);
+  return btn;
+}
+
+function renderSlots(){
+  const ds=document.getElementById('v-date').value;
+  const dayGrid=document.getElementById('slot-day');
+  const nightGrid=document.getElementById('slot-night');
+  dayGrid.innerHTML='';nightGrid.innerHTML='';
+  selSlot=null;updateVPr(null);
+
+  // 낮·저녁: 10:00~21:30 (30분 단위)
+  for(let h=10;h<=21;h++){
+    [0,30].forEach(m=>{
+      dayGrid.appendChild(makeSlotBtn(h,m,ds));
+    });
+  }
+  // 심야·새벽: 22:00~03:00 (30분 단위)
+  const nightSlots=[[22,0],[22,30],[23,0],[23,30],[0,0],[0,30],[1,0],[1,30],[2,0],[2,30],[3,0]];
+  nightSlots.forEach(([h,m])=>nightGrid.appendChild(makeSlotBtn(h,m,ds)));
+}
+
+function pickSlot(hf,btn,ds,label){
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const nd=parseDate(ds); nd.setDate(nd.getDate()+1);
+  const nDs=nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');
+  selSlot={h:hf,ds,label,nextDs:nDs};updateVPr({h:hf,ds,nextDs:nDs});
+}
+function updateVPr(slot){
+  if(!slot){document.getElementById('pc-total').textContent=curBase.toLocaleString()+'원~';document.getElementById('pc-add-row').style.display='none';return;}
+  const sc=getSC(curKey,slot.ds,slot.h,slot.nextDs);
+  if(sc){
+    document.getElementById('pc-add-row').style.display='flex';
+    document.getElementById('pc-add-lbl').textContent=sc.l;
+    document.getElementById('pc-add').textContent='+'+sc.a.toLocaleString()+'원';
+    document.getElementById('pc-total').textContent=(curBase+sc.a).toLocaleString()+'원';
+  }else{
+    document.getElementById('pc-add-row').style.display='none';
+    document.getElementById('pc-total').textContent=curBase.toLocaleString()+'원';
+  }
+}
+
+/* ── 제출 ── */
+function submitVoice(){
+  if(!selSlot){showToast('⚠ 희망 시간을 선택해 주세요.');return;}
+  const nm=document.getElementById('v-name').value||'익명';
+  bookings.push({id:nid++,date:selSlot.ds,startHour:selSlot.h,blockMin:curBlock,name:nm+'*',type:curLabel,status:'pending'});
+  closeMo('mo-voice');showToast('✦ 예약 신청 완료! 1시간 내 입금해 주세요.');
+  if(admAuth)renderAdmList();
+}
+function submitNotify(){closeMo('mo-notify');showToast('🔔 알림 신청 완료! 가능해지면 문자 드릴게요.');}
+
+/* ── 관리자 ── */
+const PW='1234';
+function toggleAdm(){admOpen=!admOpen;document.getElementById('adm-panel').classList.toggle('show',admOpen);}
+function checkPw(){if(document.getElementById('adm-pw').value===PW){admAuth=true;document.getElementById('adm-login').style.display='none';document.getElementById('adm-body').style.display='block';renderAdmList();}else showToast('⚠ 비밀번호 오류');}
+function admLogout(){admAuth=false;document.getElementById('adm-login').style.display='block';document.getElementById('adm-body').style.display='none';document.getElementById('adm-pw').value='';}
+
+function setVSt(s,btn){vSt=s;document.getElementById('vst-btns').querySelectorAll('.st-opt').forEach(b=>b.classList.remove('aopt'));btn.classList.add('aopt');applyVSt();applyNotify();}
+
+function setMSt(s,btn){
+  mSt=s;
+  document.getElementById('mst-btns').querySelectorAll('.st-opt').forEach(b=>b.classList.remove('aopt'));
+  btn.classList.add('aopt');
+  // 소요일 섹션: progress / off / pause 일 때 표시
+  const showDays = (s==='progress'||s==='off'||s==='pause');
+  document.getElementById('days-section').style.display=showDays?'block':'none';
+  applyMSt();
+}
+
+function setDays(dateStr){
+  msgDays=dateStr;
+  applyMSt();
+}
+function clearAvailDate(){
+  msgDays='';
+  document.getElementById('avail-date').value='';
+  applyMSt();
+}
+function fmtDate(ds){
+  if(!ds)return '';
+  const d=new Date(ds);
+  return `${d.getMonth()+1}월 ${d.getDate()}일`;
+}
+
+function applyVSt(){
+  const badge=document.getElementById('vbadge'),t=document.getElementById('vbadge-t'),d=document.getElementById('vdesc');
+  badge.className='sbadge';
+  if(vSt==='available'){badge.classList.add('b-avail');t.textContent='바로 상담 가능';d.textContent='지금 바로 상담 가능합니다. 카카오톡으로 문의해 주세요.';}
+  else if(vSt==='busy'){badge.classList.add('b-busy');t.textContent='상담 진행 중';d.textContent='현재 다른 분과 상담 중이에요.';}
+  else{badge.classList.add('b-closed');t.textContent='오늘 마감';d.textContent='오늘 보이스 상담은 마감되었습니다.';}
+}
+
+function applyMSt(){
+  const badge=document.getElementById('mbadge'),t=document.getElementById('mbadge-t'),d=document.getElementById('mdesc');
+  const daysEl=document.getElementById('mdesc-days');
+  badge.className='sbadge';
+  const dateLabel = msgDays ? `${fmtDate(msgDays)}부터 답변 가능` : '';
+  if(mSt==='open'){
+    badge.classList.add('b-open');t.textContent='접수 가능';d.innerHTML='언제든 고민을 보내두실 수 있어요.<br>접수된 순서대로 답변 드립니다.';daysEl.style.display='none';
+  } else if(mSt==='progress'){
+    badge.classList.add('b-busy');t.textContent='순차 답변 진행 중';d.textContent='현재 순서대로 답변 드리고 있어요.';
+    daysEl.style.display=dateLabel?'block':'none';daysEl.textContent='📅 '+dateLabel;
+  } else if(mSt==='pause'){
+    badge.classList.add('b-closed');t.textContent='답변 불가 시간';d.textContent='현재 답변이 어려운 시간대입니다.';
+    daysEl.style.display=dateLabel?'block':'none';daysEl.textContent='📅 '+dateLabel;
+  } else if(mSt==='off'){
+    badge.classList.add('b-closed');t.textContent='답변 휴무 중';d.textContent='휴무 중입니다. 메시지 접수는 가능해요.';
+    daysEl.style.display=dateLabel?'block':'none';daysEl.textContent='📅 '+dateLabel;
+  }
+}
+
+function applyNotify(){
+  notifyOn=document.getElementById('tog-notify').checked;
+  const btn=document.getElementById('notify-btn');
+  const show=notifyOn&&vSt==='busy';
+  btn.style.display=show?'block':'none';
+}
+function applyBook(){
+  bookOn=document.getElementById('tog-book').checked;
+  ['book-btn-15','book-btn-30','book-btn-60'].forEach(id=>{
+    const b=document.getElementById(id);
+    b.disabled=!bookOn;b.style.opacity=bookOn?'1':'.4';
+  });
+}
+
+function renderAdmList(){
+  const el=document.getElementById('adm-list');
+  if(!bookings.length){el.innerHTML='<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">예약 없음</div>';return;}
+  el.innerHTML=bookings.map(b=>`<div class="res-card"><div class="res-top"><div><div class="res-nm">${b.name}</div><div class="res-tp">${b.type}</div></div><span class="${b.status==='confirmed'?'bs-c':'bs-p'}">${b.status==='confirmed'?'확정':'대기'}</span></div><div class="res-det">📅 ${b.date} ${b.startHour<10?'0'+b.startHour:b.startHour}:00 · 블록 ${b.blockMin}분 · KT: ${b.kakao||'—'} · 📞 ${b.phone||'—'}</div><div class="res-acts">${b.status!=='confirmed'?`<button class="rbtn conf" onclick="confBook(${b.id})">✓ 확정</button>`:''}<button class="rbtn canc" onclick="cancBook(${b.id})">✕ 취소</button></div></div>`).join('');
+}
+function confBook(id){const b=bookings.find(x=>x.id===id);if(b){b.status='confirmed';renderAdmList();showToast('✦ 예약 확정!');}}
+function cancBook(id){bookings=bookings.filter(x=>x.id!==id);renderAdmList();showToast('취소 완료 — 해당 시간대 오픈됨');}
+
+/* ── Toast ── */
+function showToast(msg){const t=document.getElementById('toast-el');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+
+/* ── 초기화 ── */
+applyVSt();applyMSt();applyNotify();
+</script>
+</body>
+</html>
