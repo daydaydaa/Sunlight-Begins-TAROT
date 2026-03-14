@@ -1,0 +1,23 @@
+{
+  "name": "해들녘 Sunlight Begins TAROT",
+  "short_name": "해들녘 TAROT",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0d1a2e",
+  "theme_color": "#0d1a2e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "channels4_profile.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "channels4_profile.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
