@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- 배경 -->
+  <rect width="512" height="512" rx="96" fill="#f8f4ec"/>
+  <!-- 골드 테두리 -->
+  <rect x="18" y="18" width="476" height="476" rx="82" fill="none" stroke="#8a6a20" stroke-width="6" opacity="0.6"/>
+  <!-- 내부 장식 테두리 -->
+  <rect x="36" y="36" width="440" height="440" rx="68" fill="none" stroke="#8a6a20" stroke-width="2" opacity="0.3"/>
+
+  <!-- 상단 장식 별 -->
+  <text x="256" y="116" font-family="serif" font-size="52" fill="#8a6a20" text-anchor="middle" opacity="0.8">✦</text>
+
+  <!-- 메인 텍스트: 해들녘 -->
+  <text x="256" y="240" font-family="serif" font-size="90" font-weight="300" fill="#2a1f0a" text-anchor="middle" letter-spacing="10">해들녘</text>
+
+  <!-- 구분선 -->
+  <line x1="100" y1="268" x2="412" y2="268" stroke="#8a6a20" stroke-width="2" opacity="0.5"/>
+
+  <!-- 서브 텍스트: TAROT -->
+  <text x="256" y="330" font-family="Georgia, serif" font-size="44" font-weight="400" fill="#8a6a20" text-anchor="middle" letter-spacing="20">TAROT</text>
+
+  <!-- 하단 장식 -->
+  <text x="256" y="408" font-family="serif" font-size="36" fill="#8a6a20" text-anchor="middle" opacity="0.6">✦ ✦ ✦</text>
+</svg>
