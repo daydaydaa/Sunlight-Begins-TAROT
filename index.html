@@ -1331,9 +1331,14 @@ function shareApp(){
       if(!pref){
         const intro = document.getElementById('music-intro');
         intro.style.opacity='0';
-        intro.style.transition='opacity .8s ease';
         intro.style.display='flex';
-        setTimeout(()=>{ intro.style.opacity='1'; }, 50);
+        // iOS Safari: display 변경 후 한 프레임 뒤에 opacity 변경해야 트랜지션 작동
+        requestAnimationFrame(()=>{
+          requestAnimationFrame(()=>{
+            intro.style.transition='opacity .8s ease';
+            intro.style.opacity='1';
+          });
+        });
       } else if(pref === 'play'){
         musicLoad(0);
         musicAudio.play().then(()=>{
