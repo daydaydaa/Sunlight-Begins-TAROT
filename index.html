@@ -1319,35 +1319,32 @@ function shareApp(){
     s.style.cssText=`width:${size};height:${size};left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*2+1).toFixed(1)}s;animation-delay:${(Math.random()*2).toFixed(1)}s;`;
     stars.appendChild(s);
   }
-  window.addEventListener('load',()=>{
+
+  function showSplashThenPopup(){
+    const sp=document.getElementById('splash');
+    if(!sp || sp.classList.contains('hide')) return;
+    sp.classList.add('hide');
+    document.body.classList.add('splash-done');
     setTimeout(()=>{
-      const sp=document.getElementById('splash');
-      sp.classList.add('hide');
-      document.body.classList.add('splash-done');
-      setTimeout(()=>{
-        sp.remove();
-        // 스플래시 끝난 후 음악 팝업 표시
-        const pref = localStorage.getItem('musicPref');
-        if(!pref){
-          setTimeout(()=>{
-            const intro = document.getElementById('music-intro');
-            intro.style.opacity='0';
-            intro.style.transition='opacity .8s ease';
-            intro.style.display='flex';
-            requestAnimationFrame(()=>{
-              requestAnimationFrame(()=>{ intro.style.opacity='1'; });
-            });
-          }, 1000);
-        } else if(pref === 'play'){
-          musicLoad(0);
-          musicAudio.play().then(()=>{
-            document.getElementById('music-play-btn').textContent='⏸';
-            musicPlaying=true;
-          }).catch(()=>{});
-        }
-      },650);
-    },1800);
-  });
+      sp.remove();
+      const pref = localStorage.getItem('musicPref');
+      if(!pref){
+        const intro = document.getElementById('music-intro');
+        intro.style.opacity='0';
+        intro.style.transition='opacity .8s ease';
+        intro.style.display='flex';
+        setTimeout(()=>{ intro.style.opacity='1'; }, 50);
+      } else if(pref === 'play'){
+        musicLoad(0);
+        musicAudio.play().then(()=>{
+          document.getElementById('music-play-btn').textContent='⏸';
+          musicPlaying=true;
+        }).catch(()=>{});
+      }
+    },650);
+  }
+
+  setTimeout(showSplashThenPopup, 1800);
 })();
 
 function goKakao(){
