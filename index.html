@@ -32,7 +32,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;500;600&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
 <style>
 :root{
-  --deep:#f8f4ec;--card:#ffffff;--card2:#fdfaf4;
+  --deep:#f8f4ec;--card:rgba(255,255,255,0.93);--card2:rgba(253,250,244,0.93);
   --gold:#8a6a20;--gold-light:#6b5018;--gold-dim:#a07828;
   --teal:#2a7070;--teal-light:#1f5f5f;
   --cream:#2a1f0a;--soft:#4a3c20;--text:#1a1a1a;--muted:#7a6a50;
@@ -61,7 +61,7 @@ header{text-align:center;padding:48px 0 28px;}
 /* ── STATUS CARDS ── */
 .status-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
 @media(max-width:500px){.status-grid{grid-template-columns:1fr;}}
-.status-card{background:#ffffff;border:1px solid rgba(138,106,32,.25);border-radius:12px;padding:20px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(138,106,32,.08);}
+.status-card{background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.25);border-radius:12px;padding:20px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(138,106,32,.08);}
 .status-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold-dim),transparent);}
 .slabel{font-size:14px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;font-family:'Cormorant Garamond',serif;}
 .sbadge{display:inline-flex;align-items:center;gap:6px;padding:7px 15px;border-radius:20px;font-size:14px;font-weight:500;margin-bottom:6px;}
@@ -91,12 +91,12 @@ header{text-align:center;padding:48px 0 28px;}
 
 /* ── SECTION HEADER ── */
 .section{margin-bottom:16px;}
-.sec-hd{background:#ffffff;border:1px solid rgba(138,106,32,.25);border-radius:12px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(138,106,32,.07);}
+.sec-hd{background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.25);border-radius:12px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(138,106,32,.07);}
 .sec-hl{display:flex;align-items:center;gap:10px;min-width:0;flex:1;}
 .sec-icon{font-size:22px;}
 .sec-name{font-size:clamp(15px,4vw,18px);color:#2a1f0a;font-weight:500;}
 .sec-price{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--gold);}
-.sec-bd{background:#fdfaf4;border:1px solid rgba(138,106,32,.18);border-top:none;border-radius:0 0 12px 12px;}
+.sec-bd{background:rgba(253,250,244,0.93);border:1px solid rgba(138,106,32,.18);border-top:none;border-radius:0 0 12px 12px;}
 .sec-hd.rounded-full{border-radius:12px;}
 .sec-in{padding:22px;}
 
@@ -145,7 +145,7 @@ header{text-align:center;padding:48px 0 28px;}
 .common-guide .ilist li{font-size:15px;line-height:1.8;}
 
 /* ── 심야/주말 요금표 ── */
-.sc-wrap{background:var(--card);border:1px solid rgba(138,106,32,.15);border-radius:12px;padding:22px;margin-bottom:16px;}
+.sc-wrap{background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.15);border-radius:12px;padding:22px;margin-bottom:16px;}
 .sc-title{text-align:center;font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold);margin-bottom:14px;letter-spacing:.08em;}
 .sc-table{width:100%;border-collapse:collapse;font-size:14px;}
 .sc-table th{color:var(--muted);font-weight:400;padding:8px 8px;text-align:center;border-bottom:1px solid rgba(138,106,32,.1);}
@@ -159,7 +159,7 @@ header{text-align:center;padding:48px 0 28px;}
 /* ── 모달 ── */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px;}
 .mo.show{display:flex;}
-.mbox{background:#fdfaf4;border:1px solid rgba(138,106,32,.3);border-radius:16px;width:100%;max-width:460px;padding:30px 26px;position:relative;animation:mIn .3s ease;max-height:90vh;overflow-y:auto;}
+.mbox{background:rgba(253,250,244,0.97);border:1px solid rgba(138,106,32,.3);border-radius:16px;width:100%;max-width:460px;padding:30px 26px;position:relative;animation:mIn .3s ease;max-height:90vh;overflow-y:auto;}
 @keyframes mIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .mtitle{font-family:'Cormorant Garamond',serif;font-size:24px;color:#2a1f0a;margin-bottom:4px;}
 .msub{font-size:14px;color:var(--soft);margin-bottom:20px;}
@@ -176,7 +176,7 @@ option{background:#fdfaf4;}
 /* 관리자 */
 .adm-toggle{text-align:center;margin:40px 0 0;cursor:pointer;font-size:12px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;padding:8px;}
 .adm-toggle:hover{color:var(--soft);}
-.adm-panel{background:#f5f0e8;border:1px solid rgba(138,106,32,.2);border-radius:12px;margin-top:12px;display:none;}
+.adm-panel{background:rgba(245,240,232,0.95);border:1px solid rgba(138,106,32,.2);border-radius:12px;margin-top:12px;display:none;}
 .adm-panel.show{display:block;}
 .adm-in{padding:24px;}
 .adm-title{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--gold);margin-bottom:20px;}
@@ -706,7 +706,7 @@ footer{text-align:center;padding:32px 0 16px;font-size:14px;color:var(--muted);l
       <span id="lbl-15" style="font-size:11px;color:var(--muted);">펼치기</span>
     </div>
   </div>
-  <div id="call-15" style="display:none;background:#fff;border:1px solid rgba(138,106,32,.18);border-top:none;border-radius:0 0 12px 12px;padding:12px 20px;">
+  <div id="call-15" style="display:none;background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.18);border-top:none;border-radius:0 0 12px 12px;padding:12px 20px;">
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead><tr style="border-bottom:1px solid rgba(138,106,32,.1);">
         <th style="text-align:left;padding:5px 4px;color:var(--muted);font-weight:400;">시간대</th>
@@ -735,7 +735,7 @@ footer{text-align:center;padding:32px 0 16px;font-size:14px;color:var(--muted);l
       <span id="lbl-30" style="font-size:11px;color:var(--muted);">펼치기</span>
     </div>
   </div>
-  <div id="call-30" style="display:none;background:#fff;border:1px solid rgba(138,106,32,.18);border-top:none;border-radius:0 0 12px 12px;padding:12px 20px;">
+  <div id="call-30" style="display:none;background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.18);border-top:none;border-radius:0 0 12px 12px;padding:12px 20px;">
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead><tr style="border-bottom:1px solid rgba(138,106,32,.1);">
         <th style="text-align:left;padding:5px 4px;color:var(--muted);font-weight:400;">시간대</th>
@@ -764,7 +764,7 @@ footer{text-align:center;padding:32px 0 16px;font-size:14px;color:var(--muted);l
       <span id="lbl-60" style="font-size:11px;color:var(--muted);">펼치기</span>
     </div>
   </div>
-  <div id="call-60" style="display:none;background:#fff;border:1px solid rgba(138,106,32,.18);border-top:none;border-radius:0 0 12px 12px;padding:12px 20px;">
+  <div id="call-60" style="display:none;background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.18);border-top:none;border-radius:0 0 12px 12px;padding:12px 20px;">
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead><tr style="border-bottom:1px solid rgba(138,106,32,.1);">
         <th style="text-align:left;padding:5px 4px;color:var(--muted);font-weight:400;">시간대</th>
@@ -1004,7 +1004,7 @@ footer{text-align:center;padding:32px 0 16px;font-size:14px;color:var(--muted);l
         <button class="st-opt" onclick="setAlertVis('show',this)">👁 노출</button>
       </div>
       <div style="margin-top:16px;font-size:13px;color:var(--muted);margin-bottom:8px;">신청 목록</div>
-      <div id="alert-list" style="background:#fff;border:1px solid rgba(138,106,32,.15);border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;">
+      <div id="alert-list" style="background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.15);border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;">
         <div style="font-size:13px;color:var(--muted);text-align:center;padding:8px 0;" id="alert-empty">신청 내역이 없습니다.</div>
       </div>
     </div>
@@ -1024,7 +1024,7 @@ footer{text-align:center;padding:32px 0 16px;font-size:14px;color:var(--muted);l
         <button onclick="copyCoupon()" style="margin-top:8px;padding:6px 16px;background:rgba(138,106,32,.12);border:1px solid rgba(138,106,32,.25);border-radius:6px;color:var(--gold);font-size:12px;cursor:pointer;font-family:'Noto Serif KR',serif;">복사하기</button>
       </div>
       <div style="margin-top:16px;font-size:13px;color:var(--muted);margin-bottom:8px;">발급된 쿠폰 목록</div>
-      <div id="coupon-list" style="background:#fff;border:1px solid rgba(138,106,32,.15);border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;">
+      <div id="coupon-list" style="background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.15);border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;">
         <div style="font-size:13px;color:var(--muted);text-align:center;padding:8px 0;" id="coupon-empty">발급된 쿠폰이 없습니다.</div>
       </div>
     </div>
@@ -1044,7 +1044,7 @@ footer{text-align:center;padding:32px 0 16px;font-size:14px;color:var(--muted);l
     <div class="adm-sec">
       <div class="adm-sec-t">🏆 룰렛 당첨 내역</div>
       <input type="text" id="result-search" class="fi" placeholder="쿠폰 코드로 검색" style="margin-bottom:8px;" oninput="filterResults(this.value)">
-      <div id="result-list" style="background:#fff;border:1px solid rgba(138,106,32,.15);border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;">
+      <div id="result-list" style="background:rgba(255,255,255,0.93);border:1px solid rgba(138,106,32,.15);border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;">
         <div style="font-size:13px;color:var(--muted);text-align:center;padding:8px 0;" id="result-empty">당첨 내역이 없습니다.</div>
       </div>
     </div>
