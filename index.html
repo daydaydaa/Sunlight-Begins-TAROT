@@ -381,6 +381,20 @@ footer{text-align:center;padding:32px 0 16px;font-size:14px;color:var(--muted);l
 </div>
 <button onclick="shareApp()" style="width:100%;padding:12px;background:rgba(138,106,32,.08);border:1px solid rgba(138,106,32,.2);border-radius:8px;color:var(--soft);font-size:13px;cursor:pointer;font-family:'Noto Serif KR',serif;margin-top:8px;">📤 이 곳을 공유하기</button>
 
+<!-- 음악 플레이어 (1탭 하단 고정) -->
+<div id="music-player" style="margin-top:20px;background:linear-gradient(135deg,rgba(240,234,216,.08),rgba(232,223,200,.05));border:1px solid rgba(138,106,32,.2);border-radius:16px;padding:14px 18px;">
+  <div style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:8px;letter-spacing:.05em;" id="music-title">1_Petals_in_the_Rain</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;">
+    <button onclick="musicPrev()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--gold);padding:2px;">⏮</button>
+    <button onclick="musicToggle()" id="music-play-btn" style="background:rgba(138,106,32,.15);border:1px solid rgba(138,106,32,.3);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:16px;color:var(--gold);">▶</button>
+    <button onclick="musicNext()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--gold);padding:2px;">⏭</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <span style="font-size:13px;">🔊</span>
+    <input type="range" id="music-vol" min="0" max="1" step="0.05" value="0.5" oninput="musicVolume(this.value)" style="flex:1;accent-color:var(--gold);height:3px;">
+  </div>
+</div>
+
 </div><!-- /tab-status -->
 
 <!-- ════ 탭2: 질문할때는 ════ -->
@@ -1112,20 +1126,6 @@ footer{text-align:center;padding:32px 0 16px;font-size:14px;color:var(--muted);l
   </div>
 </div>
 
-<!-- 음악 플레이어 -->
-<div id="music-player" style="position:fixed;bottom:80px;right:16px;z-index:9000;background:linear-gradient(135deg,#f0ead8,#e8dfc8);border:1px solid rgba(138,106,32,.3);border-radius:16px;padding:10px 14px;box-shadow:0 4px 20px rgba(138,106,32,.2);cursor:grab;user-select:none;min-width:200px;">
-  <div style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:6px;letter-spacing:.05em;" id="music-title">1_Petals_in_the_Rain</div>
-  <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">
-    <button onclick="musicPrev()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--gold);padding:2px;">⏮</button>
-    <button onclick="musicToggle()" id="music-play-btn" style="background:rgba(138,106,32,.15);border:1px solid rgba(138,106,32,.3);border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:16px;color:var(--gold);">▶</button>
-    <button onclick="musicNext()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--gold);padding:2px;">⏭</button>
-  </div>
-  <div style="display:flex;align-items:center;gap:8px;">
-    <span style="font-size:13px;">🔊</span>
-    <input type="range" id="music-vol" min="0" max="1" step="0.05" value="0.5" oninput="musicVolume(this.value)" style="flex:1;accent-color:var(--gold);height:3px;">
-  </div>
-</div>
-
 <audio id="music-audio" preload="auto"></audio>
 
 <script>
@@ -1209,47 +1209,6 @@ function musicVolume(v){
 
 musicAudio.addEventListener('ended', musicNext);
 musicLoad(0);
-
-/* ── 플레이어 드래그 ── */
-const player = document.getElementById('music-player');
-let isDragging = false, startX, startY, initLeft, initTop;
-
-function dragStart(e){
-  isDragging = true;
-  player.style.cursor = 'grabbing';
-  const touch = e.touches ? e.touches[0] : e;
-  startX = touch.clientX;
-  startY = touch.clientY;
-  const rect = player.getBoundingClientRect();
-  initLeft = rect.left;
-  initTop = rect.top;
-  player.style.right = 'auto';
-  player.style.bottom = 'auto';
-  player.style.left = initLeft + 'px';
-  player.style.top = initTop + 'px';
-}
-
-function dragMove(e){
-  if(!isDragging) return;
-  e.preventDefault();
-  const touch = e.touches ? e.touches[0] : e;
-  const dx = touch.clientX - startX;
-  const dy = touch.clientY - startY;
-  player.style.left = (initLeft + dx) + 'px';
-  player.style.top = (initTop + dy) + 'px';
-}
-
-function dragEnd(){
-  isDragging = false;
-  player.style.cursor = 'grab';
-}
-
-player.addEventListener('mousedown', dragStart);
-document.addEventListener('mousemove', dragMove);
-document.addEventListener('mouseup', dragEnd);
-player.addEventListener('touchstart', dragStart, {passive:false});
-document.addEventListener('touchmove', dragMove, {passive:false});
-document.addEventListener('touchend', dragEnd);
 
 function toggleCall(bodyId, iconId, lblId){
   const body = document.getElementById(bodyId);
