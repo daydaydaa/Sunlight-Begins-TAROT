@@ -1505,8 +1505,8 @@ async function submitAccountReq(){
   if(!phone||phone.replace(/\D/g,'').length<10){showToast('⚠ 연락처를 확인해주세요.');return;}
 
   // ── 텔레그램 알림 ──
-  const BOT_TOKEN = '8721602764:AAF_oouccznYnx2_Nojz34xqfzTBBKsBiKQ';
-  const CHAT_ID   = '8276836671';
+  const BOT_TOKEN = '8216261026:AAFAGW9a5WUwQAY9QRxhRdJGLHq0HumM624';
+  const CHAT_ID   = '8611014059';
   const msg = `💳 계좌번호 요청\n별명: ${name}\n연락처: ${phone}`;
 
   try{
@@ -2001,9 +2001,9 @@ window.saveRouletteResult = function(code, name, prize){
 };
 
 /* ── 텔레그램 알림 ── */
-const TG_ALERT_TOKEN = '8765419875:AAGhBFHtTze9O5vDNG9TdmWdoFdRpX8AyTU';
-const TG_SUGGEST_TOKEN = '8576550115:AAGhFrfvRnCVoWgS3kvubt3P5F4yOd9EvUQ';
-const TG_CHAT_ID = '8276836671';
+const TG_ALERT_TOKEN = '8216261026:AAFAGW9a5WUwQAY9QRxhRdJGLHq0HumM624';
+const TG_SUGGEST_TOKEN = '8216261026:AAFAGW9a5WUwQAY9QRxhRdJGLHq0HumM624';
+const TG_CHAT_ID = '8611014059';
 
 async function sendTelegram(token, message){
   try {
